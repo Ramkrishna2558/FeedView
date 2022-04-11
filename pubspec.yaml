@@ -33,6 +33,7 @@ dependencies:
   firebase_auth: ^3.3.4
   flutter:
     sdk: flutter
+  sensors_plus: ^1.2.2
   animated_splash_screen:
 
 

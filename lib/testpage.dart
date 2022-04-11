@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'profile.dart';
+import 'package:sensors_plus/sensors_plus.dart  ';
 
 class testpage extends StatefulWidget {
   const testpage({Key? key}) : super(key: key);
@@ -10,6 +11,34 @@ class testpage extends StatefulWidget {
 }
 
 class _testpageState extends State<testpage> {
+  double x = 0, y = 0, z = 0;
+  String direction = "Orientation Stable";
+  // String directiona = "none";
+  @override
+  void initState() {
+    gyroscopeEvents.listen((GyroscopeEvent event) {
+      print(event);
+
+      x = event.x;
+      y = event.y;
+      z = event.z;
+
+      if (x > 0) {
+        direction = "device is back ";
+      } else if (x < 0) {
+        direction = "device is forward ";
+      }
+      if (y > 0) {
+        direction = "device is left";
+      } else if (y < 0) {
+        direction = "device is right";
+      }
+
+      setState(() {});
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,6 +60,7 @@ class _testpageState extends State<testpage> {
         ),
         child: Stack(
           children: [
+            //HEADER POSITION
             Positioned(
               top: 70,
               right: 0,
@@ -45,6 +75,7 @@ class _testpageState extends State<testpage> {
                         topLeft: Radius.circular(50))),
               ),
             ),
+            //HEADER TEXT
             Positioned(
                 top: 79,
                 right: 100,
@@ -144,7 +175,7 @@ class _testpageState extends State<testpage> {
                   elevation: 10.0,
                   shadowColor: Colors.grey.withOpacity(0.5),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
+                    borderRadius: BorderRadius.circular(50.0),
                   ),
                   child: Container(
                     height: 140,
@@ -154,7 +185,7 @@ class _testpageState extends State<testpage> {
                         children: [
                           Center(
                             child: Text(
-                              "you're popular",
+                              direction,
                               style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.white,
@@ -166,7 +197,7 @@ class _testpageState extends State<testpage> {
                 ),
               ),
               Positioned(
-                  top: 16,
+                  top: 90,
                   left: 120,
                   child: Container(
                     height: 150,
@@ -175,12 +206,19 @@ class _testpageState extends State<testpage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Previous Results",
+                          direction,
                           style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
+                              fontSize: 26,
+                              color: Colors.black45,
                               fontWeight: FontWeight.bold),
                         ),
+                        // Text(
+                        //   directiona,
+                        //   style: TextStyle(
+                        //       fontSize: 26,
+                        //       color: Colors.black45,
+                        //       fontWeight: FontWeight.bold),
+                        // ),
                       ],
                     ),
                   ))

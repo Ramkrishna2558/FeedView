@@ -1,5 +1,6 @@
 import 'package:feedx/home.dart';
 import 'package:feedx/newhome.dart';
+import 'package:feedx/testpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -182,7 +183,7 @@ class _loginpageState extends State<loginpage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => newhome()));
+                                  builder: (context) => testpage()));
                         },
                         child: Text(
                           "Or Login as Guest",

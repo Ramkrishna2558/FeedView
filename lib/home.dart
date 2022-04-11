@@ -94,7 +94,7 @@ class feedx extends StatefulWidget {
 }
 
 class _feedxState extends State<feedx> {
-  int _currentIndex = 0;
+  int _currentIndex = 1;
   final screens = [
     testpage(),
     newhome(),
