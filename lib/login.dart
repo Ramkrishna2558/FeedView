@@ -1,4 +1,5 @@
 import 'package:feedx/home.dart';
+import 'package:feedx/motionsensor.dart';
 import 'package:feedx/newhome.dart';
 import 'package:feedx/testpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,6 +8,21 @@ import 'package:flutter/material.dart';
 import 'package:feedx/main.dart';
 import 'package:feedx/registerme.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
+// Future _getStoragePermission() async {
+//   bool permissionGranted;
+//   if (await Permission.storage.request().isGranted) {
+//     setState(() {
+//       permissionGranted = true;
+//     });
+//   } else if (await Permission.storage.request().isPermanentlyDenied) {
+//     await openAppSettings();
+//   } else if (await Permission.storage.request().isDenied) {
+//     setState(() {
+//       permissionGranted = false;
+//     });
+//   }
+// }
 
 class loginpage extends StatefulWidget {
   const loginpage({Key? key}) : super(key: key);
@@ -30,7 +46,7 @@ class _loginpageState extends State<loginpage> {
   Widget build(BuildContext context) {
     //email field
     final emailField = TextFormField(
-      autofocus: false,
+      autofocus: true,
       controller: emailController,
       keyboardType: TextInputType.emailAddress,
       validator: (value) {

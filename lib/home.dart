@@ -3,7 +3,6 @@ import 'package:feedx/testpage.dart';
 import 'package:flutter/material.dart';
 import 'profile.dart';
 import 'login.dart';
-
 /*class feedx extends StatefulWidget {
   const feedx({Key? key}) : super(key: key);
 
@@ -115,11 +114,11 @@ class _feedxState extends State<feedx> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.waves),
                 label: 'testpage',
-                backgroundColor: Colors.redAccent),
+                backgroundColor: Colors.teal),
             BottomNavigationBarItem(
                 icon: Icon(Icons.home),
                 label: 'newhome',
-                backgroundColor: Colors.greenAccent),
+                backgroundColor: Colors.teal),
             BottomNavigationBarItem(
                 icon: Icon(Icons.account_box),
                 label: 'profile',

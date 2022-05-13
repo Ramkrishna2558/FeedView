@@ -15,10 +15,6 @@ class _profileState extends State<profile> {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      /*    appBar: AppBar(
-        title: Center(child: Text('Profile')),
-        backgroundColor: Colors.teal,
-      ),  */
       body: Column(
         children: [
           Container(

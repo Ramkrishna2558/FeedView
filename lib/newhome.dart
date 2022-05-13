@@ -4,6 +4,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'main.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+
+// const double CAMERA_ZOOM = 16;
+// const double CAMERA_TILT = 80;
+// const double CAMERA_BEARING = 30;
+// const LatLng SOURCE_LOCATION = LatLng(42.747932, -71.167889);
+// const LatLng DEST_LOCATION = LatLng(37.335685, -122.0605916);
 
 class newhome extends StatefulWidget {
   const newhome({Key? key}) : super(key: key);
@@ -13,6 +21,10 @@ class newhome extends StatefulWidget {
 }
 
 class _newhomeState extends State<newhome> {
+  Position? _currentPosition;
+  String? _currentAddress;
+  // changed here to late intializer from original
+
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
@@ -39,7 +51,7 @@ class _newhomeState extends State<newhome> {
           borderRadius: BorderRadius.only(
               // bottomRight: Radius.circular(50),
               ),
-          color: Colors.greenAccent,
+          color: Colors.teal,
           boxShadow: [
             new BoxShadow(
                 color: Color(0xFF363f93).withOpacity(0.6),
@@ -196,22 +208,51 @@ class _newhomeState extends State<newhome> {
                 ),
               ),
               Positioned(
-                  top: 16,
-                  left: 120,
+                  top: 70,
+                  left: 88,
                   child: Container(
-                    height: 150,
-                    width: 160,
+                    height: 170,
+                    width: 220,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "you're popular",
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        /*   Text(
+                      children: <Widget>[
+                        // if (_currentPosition != null)
+                        //   Text(
+                        //   //  "LAT: ${_currentPosition!.latitude}, LNG: ${_currentPosition!.longitude}",
+                        //    ""),
+                        if (_currentAddress != null)
+                          Text(
+                            _currentAddress!,
+                            style: TextStyle(fontSize: 21, color: Colors.grey),
+                          ),
+
+                        Center(
+                          child: ElevatedButton.icon(
+                            icon: Icon(
+                              Icons.location_city_sharp,
+                              color: Colors.grey,
+                              size: 25.0,
+                            ),
+                            label: Text("Get Last test location"),
+                            onPressed: () {
+                              _getCurrentLocation();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(30.0),
+                              ),
+                            ),
+
+                            // FlatButton(
+                            //   child: Text("Get location"),
+                            //   onPressed: () {
+                            //     _getCurrentLocation();
+                            //   },
+                            // ),
+                          ),
+                        )
+                      ],
+                      /*   Text(
                           "PVGCOE,Nashik",
                           style: TextStyle(
                               fontSize: 16,
@@ -229,11 +270,45 @@ class _newhomeState extends State<newhome> {
                               color: Colors.white70,
                               fontWeight: FontWeight.normal),
                         ), */
-                      ],
                     ),
                   ))
             ],
           )),
     ]));
+  }
+
+  _getCurrentLocation() {
+    Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.best,
+            forceAndroidLocationManager: true)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+        _getAddressFromLatLng();
+      });
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  _getAddressFromLatLng() async {
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+          _currentPosition!.latitude, _currentPosition!.longitude);
+
+      Placemark place = placemarks[0];
+
+      setState(() {
+        _currentAddress = "${place.thoroughfare},"
+                "${place.street},"
+                "${place.subLocality},"
+                //"${place.subAdministrativeArea},"
+                "${place.locality} "
+            //" ${place.country}"
+            ;
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 }
