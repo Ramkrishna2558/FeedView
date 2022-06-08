@@ -1,4 +1,4 @@
-# feedx
+# FEEDVIEW
 Short Description:
 Formerly (Feedview) is a analytics multi platform application designed to suggest potholes and bumps in roadways and to detect the stages of suspension in cars using the mobile sensors in the mobile without requiring any external hardware.
 
